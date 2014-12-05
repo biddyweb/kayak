@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+
+   
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+     
+   
+       <Button 
+          android:id="@+id/fixed_whitewater_update_btn"
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:text="@string/fixed_whitewater_alert_dialog_update_btn"
+          />
+
+     
+    <LinearLayout 
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+     <TextView
+        android:id="@+id/fixed_whitewater_number_view_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/fixed_whitewater_alert_dialog_number"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+     
+      <TextView
+        android:id="@+id/fixed_whitewater_number_view"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/fixed_whitewater_edit_number_initial_value"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+    
+   <LinearLayout
+       android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"> 
+    <TextView
+        android:id="@+id/fixed_whitewater_lat_view_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/fixed_whitewater_alert_dialog_lat_label"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/fixed_whitewater_lat_view_edit"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:scrollHorizontally="true"
+        android:gravity="fill_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+    
+    
+   <LinearLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"> 
+    <TextView
+        android:id="@+id/fixed_whitewater_lon_view_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/fixed_whitewater_alert_dialog_lon_label"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/fixed_whitewater_lon_view_edit"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:scrollHorizontally="true"
+        android:gravity="fill_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"> 
+    
+     <TextView
+        android:id="@+id/fixed_whitewater_type_view_label"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/fixed_whitewater_alert_dialog_type_view_label"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+    <EditText
+        android:id="@+id/fixed_whitewater_type_view_edit"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:scrollHorizontally="true"
+        android:inputType="text|textNoSuggestions"
+        android:gravity="fill_horizontal"
+       
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fixed_whitewater_name_view_label"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:text="@string/fixed_whitewater_alert_dialog_name_view_label"
+            android:gravity="left"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/fixed_whitewater_name_view_edit"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:scrollHorizontally="true"
+            android:inputType="text|textNoSuggestions"
+            android:gravity="fill_horizontal"
+
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fixed_whitewater_description_view_label"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:text="@string/fixed_whitewater_alert_dialog_description_view_label"
+            android:gravity="left"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/fixed_whitewater_description_view_edit"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:scrollHorizontally="true"
+            android:inputType="text|textNoSuggestions"
+            android:gravity="fill_horizontal"
+
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+   
+        
+</LinearLayout>
