@@ -37,6 +37,13 @@ public class DirectoryUtils {
 			return aDirPath;
 		}
 
+    public static String getFixedKayakItemsDirectoryPath () {
+        String aDirPath = getBaseDirectoryPath () + "/" + KayakGlobals.DEFAULT_FIXED_KAYAK_ITEMS_DATA_DIRECTORY;
+        return aDirPath;
+    }
+
+
+
 		public  static void copy( InputStream in , OutputStream out)throws IOException {
 			byte[] buffer = new byte[0xFFFF];
 			for (int len; (len = in.read(buffer)) !=-1;) {

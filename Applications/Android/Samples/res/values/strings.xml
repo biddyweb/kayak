@@ -14,7 +14,7 @@
     <!-- used in OSEABasicActivity menu -->
     <string name="menu_show_current_paramters">show parameters</string>
     <string name="menu_clear_whitewater_table">clear whitewater table</string>
-
+    <string name="menu_save_whitewater_table">save whitewater table</string>
     <!--used in current_parameters_dialog -->
     <string name="current_parameters_dialog_current_map_label">params:</string>
     <string name="current_parameters_dialog_ok">ok</string>
@@ -24,13 +24,33 @@
     <string name="preferences_show_tile_grid">show tile grid</string>
     <string name="preferences_show_tile_grid_desc">show tile grid as debug aid</string>
 
+    <!-- used in KayakBasicActivity -->
+    <string name="menu_alert_dialog_kayak_items_save_filename">filename</string>
+    <string name="menu_alert_dialog_kayak_items_save_basedirectory">base directory</string>
+
+    <string name="pref_kayak_item_directory_key">kayakitemdirectory</string>
+    <string name="menu_alert_dialog_fixed_kayak_items_title">Save the kayak fixed items table to</string>
+    <string name="menu_alert_dialog_fixed_kayak_items_ok">ok</string>
+    <string name="menu_alert_dialog_fixed_kayak_items_cancel">cancel</string>
+
+    <string name ="guiupdate_info_error_fixed_kayak_could_not_load_data_for_JOSM_Layer">Error while reading data for fixed kayak items table</string>
+    <string name ="guiupdate_info_fixed_kayak_failed_in_parsing_JOSM_Layer_file">Failed in parsing fixed kayak items data in JOSM Layer osm file</string>
+
+
     <!-- used in fixed_whitewater_alert_dialog -->
     <string name="fixed_whitewater_alert_dialog_title">whitewater</string>
-    <string name="fixed_whitewater_alert_dialog_ok_btn">okr</string>
-    <string name="fixed_whitewater_alert_dialog_cancel_btn">cancal</string>
+    <string name="fixed_whitewater_alert_dialog_ok_btn">ok</string>
+    <string name="fixed_whitewater_alert_dialog_cancel_btn">cancel</string>
     <string name="fixed_whitewater_alert_dialog_delete_btn">delete</string>
 
     <string name="fixed_whitewater_alert_dialog_update_btn">update</string>
+    <string name="fixed_whitewater_alert_dialog_put_in_btn">put_in</string>
+    <string name="fixed_whitewater_alert_dialog_egress_btn">egress</string>
+    <string name="fixed_whitewater_alert_dialog_in_out_btn">put_in;egress</string>
+    <string name="fixed_whitewater_alert_dialog_rapid_btn">rapid</string>
+    <string name="fixed_whitewater_alert_dialog_hazard_btn">hazard</string>
+
+
     <string name="fixed_whitewater_alert_dialog_number">number</string>
     <string name="fixed_whitewater_edit_number_initial_value">000</string>
     <string name="fixed_whitewater_alert_dialog_lat_label">lat</string>

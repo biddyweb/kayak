@@ -30,6 +30,13 @@
         android:title="@string/menu_svgclear"/>
 
     <item
+        android:id="@+id/menu_save_ww_table"
+        android:enabled="true"
+        android:showAsAction="never"
+        android:title="@string/menu_save_whitewater_table"/>
+
+
+    <item
         android:id="@+id/menu_clear_ww_table"
         android:enabled="true"
         android:showAsAction="never"

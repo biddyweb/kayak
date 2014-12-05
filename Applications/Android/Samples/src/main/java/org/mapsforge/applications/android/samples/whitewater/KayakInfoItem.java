@@ -98,7 +98,10 @@ public class KayakInfoItem {
 	public void setLatLong( LatLong pLatLong) {
 		mLatLong = pLatLong;
 	}
-	
+
+    public  LatLong getLatLong() {
+        return new LatLong(mLatLong.latitude,mLatLong.longitude);
+    }
 	public void setLON(double pLON) {
 		LatLong aNewLatLong = new LatLong (mLatLong.latitude,pLON);
 		mLatLong= aNewLatLong;

@@ -648,7 +648,7 @@ public class TrackDbAdapter {
 			ContentValues initialValues = new ContentValues();
 			initialValues.put(KEY_WW_NUMBER, pNumberStr);
 			initialValues.put(KEY_WW_TYPE, pTypeStr);
-			initialValues.put(KEY_WW_NAME, pDescription);
+			initialValues.put(KEY_WW_NAME, pName);
 			initialValues.put(KEY_WW_DESCRIPTION, pDescription);
 			initialValues.put(KEY_UTC, pUTC);
 			initialValues.put(KEY_LAT, pLATStr);

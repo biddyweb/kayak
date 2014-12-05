@@ -1,9 +1,11 @@
 package org.mapsforge.applications.android.samples;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 
 import org.mapsforge.applications.android.samples.service.TrackDbAdapter;
 import org.mapsforge.applications.android.samples.whitewater.KayakInfoItem;
+import org.mapsforge.applications.android.samples.whitewater.WhitewaterNode;
 import org.mapsforge.core.graphics.Canvas;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.graphics.Paint;
@@ -20,6 +22,7 @@ import org.mapsforge.map.model.MapViewPosition;
 import org.mapsforge.map.view.MapView;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -55,7 +58,7 @@ public class KayakLayer extends Layer {
     private android.graphics.Bitmap mMarkerInitialAndroidBitmap;
 	private boolean myKajakLayerEnabled;
 	private boolean snapToLocationEnabled;
-	private Context mContext;
+	private KayakBasicActivity mContext;
     private MapView mMapView;
     private GraphicFactory mGraphicFactory ;
 
@@ -89,8 +92,44 @@ public class KayakLayer extends Layer {
         double minLat = lat -rad;
         double maxLat= lat + rad;
         BoundingBox aBoundingBox = new BoundingBox(minLat, minLon,maxLat,maxLon);
+        ArrayList<KayakInfoItem> listOfNodesInBB = new ArrayList<KayakInfoItem>();
+        if ( mKayakInfoItemList != null){
+            for (int index = 0; index <  mKayakInfoItemList.size(); index++){
+                KayakInfoItem aKayakInfoItem =  mKayakInfoItemList.get(index);
+                LatLong aNodePoint = aKayakInfoItem.getLatLong();
+                if (aBoundingBox.contains(aNodePoint)) {
+                    listOfNodesInBB.add(aKayakInfoItem);
+                }
+            }
+        }
+        Log.i(TAG," items in bb tapped " + listOfNodesInBB.size());
+        if (listOfNodesInBB.size() > 0) {
+            showWhitewaterInfoItemListInfoDialog(listOfNodesInBB, aBoundingBox);
+        }
 
         return true;
+    }
+
+    private void showWhitewaterInfoItemListInfoDialog(ArrayList<KayakInfoItem> pNodesList, BoundingBox pBoundingBox) {
+        int count = pNodesList.size();
+        double latSpan = pBoundingBox.getLatitudeSpan();
+        StringBuilder sb = new StringBuilder();
+        Formatter formatter = new Formatter(sb);
+        formatter.format("%d nodes in BoundingBox span %f", count, latSpan);
+        if (test) Log.d(TAG, formatter.toString());
+        if (count == 1) {
+            int index = 0;
+            KayakInfoItem aKayakInfoItem = pNodesList.get(index);
+            boolean update = true;
+            mContext.fixedWhitewaterDialog(aKayakInfoItem,update);
+        } else {
+            AlertDialog aDialog = new AlertDialog.Builder(this.mContext)
+                    .setTitle("Whitewater " )
+                    .setMessage(" there are "+ count + " whitewater info items selectet, please increase the zoom level")
+                    .setPositiveButton("OK", null)
+                    .create();
+            aDialog.show();
+        }
     }
 
 
@@ -102,7 +141,7 @@ public class KayakLayer extends Layer {
 	 *            a reference to the application context.
 
 	 */
-	public KayakLayer(Context context,GraphicFactory pGraphicFactory, MapView pMapView) {
+	public KayakLayer(KayakBasicActivity context,GraphicFactory pGraphicFactory, MapView pMapView) {
 		super();
 		this.mContext = context;
         this.mMapView = pMapView;
@@ -131,7 +170,7 @@ public class KayakLayer extends Layer {
 	
 
 	
-  private String getCurrentInfoTableName () {
+  public String getCurrentInfoTableName () {
 	  return  DEFAULT_KAYAK_TABLE_PREFIX + "_" + mShortCurrentInfoTableName;
   }
   
@@ -334,6 +373,21 @@ public class KayakLayer extends Layer {
                     Double.toString(pKayakInfoItem.getLON()));
             pKayakInfoItem.setId(aItemId);
             mKayakInfoItemList.add(pKayakInfoItem);
+        }
+    }
+
+    public void updateWhitewaterPositionIntoDatabase(KayakInfoItem pKayakInfoItem){
+        if (pKayakInfoItem!= null){
+
+            boolean result =  mTrackDbAdapter.updatePointInFixedWhitewaterTable(getCurrentInfoTableName(),
+                    pKayakInfoItem.getId(),
+                    Integer.toString(pKayakInfoItem.getNumber()),
+                    pKayakInfoItem.getType(),
+                    pKayakInfoItem.getName(),
+                    pKayakInfoItem.getDescription(),
+                    Double.toString(pKayakInfoItem.getUTC()),
+                    Double.toString(pKayakInfoItem.getLAT()),
+                    Double.toString(pKayakInfoItem.getLON()));
         }
     }
   

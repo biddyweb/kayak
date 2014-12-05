@@ -3,6 +3,7 @@ package org.mapsforge.applications.android.samples;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,13 +23,31 @@ import java.io.File;
  * Created by vkmapsforge05 on 04.12.2014.
  */
 public class KayakBasicActivity extends OSEAMBasicActivity  {
-    private static final String TAG = "OSEAMBasicActivity";
+    private static final String TAG = "KayakBasicActivity";
     private static final boolean test = true;
     private KayakTapLayer mKayakTapLayer = null;
     private KayakLayer mKayakLayer = null;
     private Button mAddLocationButton = null;
+    private KayakJosm mKayakJosm = null;
 
 
+    /**
+     * Android Activity life cycle method.
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mKayakJosm = new KayakJosm(this);
+    }
+
+    protected void onDestroy() {
+        if (mKayakJosm != null){
+            mKayakJosm.destroy();
+        }
+        super.onDestroy();
+
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_kayak_basic;
@@ -46,6 +65,10 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
         switch (item.getItemId()) {
             case R.id.menu_clear_ww_table:
                 deleteCurrentWhitewaterTable();
+                break;
+            case R.id.menu_save_ww_table:
+                saveCurrentWhitewaterTableToExternal();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -54,6 +77,17 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
         if (mKayakLayer != null){
                 mKayakLayer.deleteCurrentWhitewaterTable();
         }
+    }
+
+    private void saveCurrentWhitewaterTableToExternal(){
+        String aTableName = mKayakLayer.getCurrentInfoTableName();
+        String aRenderThemeFileName = mXMLRenderTheme.getRelativePathPrefix();
+        File aFile = new File(aRenderThemeFileName);
+        String aParentName = aFile.getParent();
+        File aDir = new File(aParentName);
+        aParentName = aDir.getParent();
+        mKayakJosm.saveFixedKayakItems_Menu(aTableName,aParentName);
+
     }
 
     @Override
@@ -65,7 +99,7 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
         //mKayakTapLayer = aKayakTapLayer;
         //aKayakTapLayer.updateWhitewaterFile();
 
-        KayakLayer aKayakLayer = new KayakLayer(this);
+        KayakLayer aKayakLayer = new KayakLayer(this,AndroidGraphicFactory.INSTANCE, this.mapView);
         this.mapView.getLayerManager().getLayers().add(aKayakLayer);
         mKayakLayer = aKayakLayer;
 
@@ -79,10 +113,12 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
             }
         });
 
+
     }
 
-    private void fixedWhitewaterDialog(KayakInfoItem pKayakInfoItem) {
+    public void fixedWhitewaterDialog(KayakInfoItem pKayakInfoItem, boolean pUpdate) {
         final KayakInfoItem aKayakInfoItem = pKayakInfoItem;
+        final boolean aUpdateFlag = pUpdate;
         LayoutInflater factory = LayoutInflater.from(this);
         final View textEntryView = factory.inflate(R.layout.edit_fixed_whitewater_alert_dialog, null);
         final TextView aTypeField = (TextView) textEntryView.findViewById(R.id.fixed_whitewater_type_view_edit);
@@ -104,6 +140,42 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
         final TextView aLonEditField = (TextView)textEntryView.findViewById(R.id.fixed_whitewater_lon_view_edit);
         String aLonStr  = PositionTools.getLONString( pKayakInfoItem.getLON());
         aLonEditField.setText(aLonStr);
+        final Button aUpdateButton = (Button) textEntryView.findViewById(R.id.fixed_whitewater_update_btn);
+        final Button aPut_InButton = (Button) textEntryView.findViewById(R.id.fixed_whitewater_put_in_btn);
+        aPut_InButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aTypeField.setText("put_in");
+            }
+        });
+        final Button aEgressButton = (Button) textEntryView.findViewById(R.id.fixed_whitewater_egress_btn);
+        aEgressButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aTypeField.setText("egress");
+            }
+        });
+        final Button aIn_OutButton = (Button) textEntryView.findViewById(R.id.fixed_whitewater_in_out_btn);
+        aIn_OutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aTypeField.setText("put_in;egress");
+            }
+        });
+        final Button aRapidButton = (Button) textEntryView.findViewById(R.id.fixed_whitewater_rapid_btn);
+        aRapidButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aTypeField.setText("rapid");
+            }
+        });
+        final Button aHazardButton = (Button) textEntryView.findViewById(R.id.fixed_whitewater_hazard_btn);
+        aHazardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aTypeField.setText("hazard");
+            }
+        });
 
         final AlertDialog aDialog =  new AlertDialog.Builder(this)
                 .setIcon(R.drawable.alert_dialog_icon)
@@ -117,7 +189,11 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
                         aKayakInfoItem.setName(aNameStr);
                         String aDescriptionStr = aDescriptionField.getText().toString();
                         aKayakInfoItem.setDescription(aDescriptionStr);
-                        putNewFixedWhitewaterPositionIntoDatabase(aKayakInfoItem);
+                        if (aUpdateFlag) {
+
+                        }else {
+                            putNewFixedWhitewaterPositionIntoDatabase(aKayakInfoItem);
+                        }
                     }
                 })
                 .setNeutralButton(R.string.fixed_whitewater_alert_dialog_cancel_btn, new DialogInterface.OnClickListener() {
@@ -147,7 +223,18 @@ public class KayakBasicActivity extends OSEAMBasicActivity  {
         long aUTC = System.currentTimeMillis();
 
         KayakInfoItem aKayakInfoItem = new KayakInfoItem(aLatLong,aNumber,aType,aName,aDescription,aUTC);
-        fixedWhitewaterDialog(aKayakInfoItem);
+        boolean update = false;
+        fixedWhitewaterDialog(aKayakInfoItem, update);
+    }
+
+    private void updateWhitewaterPositionIntoDatabase(KayakInfoItem pKayakInfoItem){
+        if (test)  {
+            Log.i(TAG,"put Item into Db: " + pKayakInfoItem.getType() + ", " + pKayakInfoItem.getName() +", " + pKayakInfoItem.getDescription());
+        }
+        if (mKayakLayer!= null){
+            mKayakLayer.updateWhitewaterPositionIntoDatabase(pKayakInfoItem);
+            mKayakLayer.requestRedraw();
+        }
     }
 
     private void putNewFixedWhitewaterPositionIntoDatabase(KayakInfoItem pKayakInfoItem){
